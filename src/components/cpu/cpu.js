@@ -1,18 +1,14 @@
 
-import React, {Component} from 'react'
-
-class CPU extends Component {
-    constructor (props) {
-        super(props);
-
+class CPU {
+    constructor () {
         this.instCycleCount = 0;
-
+        this.bulkLoadRam = this.bulkLoadRam.bind(this);
 
         this.state = {
             PC: 0,
             AReg: 0,
             MemAddReg: 0,
-            Ram: [],
+            Ram: new Array(16).fill(0),
             InstReg: 0,
             OutReg: 0,
             Bus: 0,
@@ -39,7 +35,6 @@ class CPU extends Component {
             pcjmp: false,
             flagsin: false,
         }
-        this.state.Ram.length = 16;
     }
 
     reset = () => {
@@ -47,7 +42,7 @@ class CPU extends Component {
             PC: 0,
             AReg: 0,
             MemAddReg: 0,
-            Ram: [],
+            Ram: new Array(16).fill(0),
             InstReg: 0,
             OutReg: 0,
             Bus: 0,
@@ -74,6 +69,7 @@ class CPU extends Component {
             pcjmp: false,
             flagsin: false,
         });
+
     }
 
     resetControlSignals = () => {
@@ -97,6 +93,39 @@ class CPU extends Component {
         });
     }
 
+    loadRam = (val, addr) => {
+        // set a single byte in Ram at a given address
+        this.state.Ram[addr] = val;
+    }
+    bulkLoadRam = (mem) => {
+        // Load Ram with an array of 16 bytes
+        if(mem?.length !== 16){
+            console.log("Invalid memory format");
+            return;
+        }
+        this.setState({
+            Ram: mem,
+        });
+    }
+
+    clock = () => {
+        if(this.state.hlt){
+            console.log("Halted");
+            return;
+        }
+
+        console.log(this.state);
+        let inst = this.state.Ram[this.state.PC];
+        console.log("inst", inst);
+        this.setState({
+            InstReg: inst,
+        });
+        this.evalInst(inst);
+    }
+
+    setState = (newState) => {
+        this.state = {...this.state, ...newState};
+    }
 
     evalInst = (inst) => {
         let opcode = inst >> 4;
@@ -106,11 +135,19 @@ class CPU extends Component {
         switch(opcode){
             case 0:
             // no operation (NOP)
+                this.setState({
+                    pcinc: true,
+                    PC: this.state.PC + 1,
+                });
+                this.instCycleCount = 0;
+                console.log("NOP")
                 break
 
             case 1:
             // Load A (LDA)
+                console.log("LDA", this.instCycleCount)
                 if(this.instCycleCount === 0){
+                    console.log(1)
                     this.setState({
                         marwa: true,
                         inregoa: true,
@@ -118,6 +155,7 @@ class CPU extends Component {
                     });
                 }
                 else if(this.instCycleCount === 1){
+                    console.log(2)
                     this.setState({
                         MemAddReg: this.state.Bus,
                         Bus: this.state.Ram[this.state.Bus],
@@ -126,8 +164,12 @@ class CPU extends Component {
                     });
                 }
                 else if(this.instCycleCount === 2){
+                    console.log(3)
                     this.setState({
                         AReg: this.state.Bus,
+
+                        pcinc: true,
+                        PC: this.state.PC + 1,
                     });
                     this.instCycleCount = 0;
                 }
@@ -135,6 +177,7 @@ class CPU extends Component {
 
             case 2:
             // Add A (ADD)
+                console.log("ADD", this.instCycleCount)
                 if(this.instCycleCount === 0){
                     this.setState({
                         marwa: true,
@@ -164,6 +207,9 @@ class CPU extends Component {
                         zero: this.state.Bus === 0,
                         carry: (this.state.AReg + this.state.BReg) > 255,
                         AReg: (this.state.AReg + this.state.BReg)&0xFF,
+
+                        pcinc: true,
+                        PC: this.state.PC + 1,
                     });
                     this.instCycleCount = 0;
                 }
@@ -171,6 +217,7 @@ class CPU extends Component {
 
             case 3:
             // Sub A (SUB)
+                console.log("sub", this.instCycleCount)
                 if(this.instCycleCount === 0){
                     this.setState({
                         marwa: true,
@@ -202,6 +249,43 @@ class CPU extends Component {
                         zero: this.state.Bus === 0,
                         carry: (this.state.AReg + this.state.BReg) > 255,
                         AReg: (this.state.AReg - this.state.BReg)&0xFF,
+
+                        pcinc: true,
+                        PC: this.state.PC + 1,
+                    });
+                    this.instCycleCount = 0;
+                }
+            break;
+
+            case 4:
+            // Store A (STA)
+                console.log("STA", this.instCycleCount)
+                if(this.instCycleCount === 0){
+                    this.setState({
+                        marwa: true,
+                        inregoa: true,
+                        Bus: operand,
+                    });
+                }
+                else if(this.instCycleCount === 1){
+                    this.setState({
+                        MemAddReg: this.state.Bus,
+                        Bus: this.AReg,
+                        ramwa: true,
+                        aoa: true,
+                    });
+                }
+                else if(this.instCycleCount === 2){
+                    this.setState({
+                        Ram: this.state.Ram.map((val, index) => {
+                            if(index === this.state.MemAddReg){
+                                return this.state.Bus;
+                            }
+                            return val;
+                        }),
+
+                        pcinc: true,
+                        PC: this.state.PC + 1,
                     });
                     this.instCycleCount = 0;
                 }
@@ -209,7 +293,9 @@ class CPU extends Component {
             default:
                 break
 
+
         }
+        this.instCycleCount += 1;
     }
 }
 
