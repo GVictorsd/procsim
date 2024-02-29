@@ -1,0 +1,26 @@
+body {
+    background-color: var(--dark-1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+:root {
+
+    /* --dark-1: #070F2B; */
+    --dark-1: #0c0817;
+    /* --dark-1: #18122B; */
+    --dark-2: #393053;
+    --dark-3: #443C68;
+    --dark-4: #635985;
+
+    --light-1: #67729D;
+    --light-2: #BB9CC0;
+    --light-3: #E7BCDE;
+    --light-4: #FED9ED;
+    --light-5: #FFE6E6;
+
+    --night: rgb(18, 28, 28);
+    --midnight-blue: rgb(16, 23, 32);
+}

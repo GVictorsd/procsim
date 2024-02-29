@@ -2,18 +2,13 @@ import './textEditor.css'
 
 import React, { useEffect, useRef } from 'react';
 import Prism from 'prismjs';
-
-// Import the relevant language files for syntax highlighting
-// import 'prismjs/components/prism-javascript';
 import 'prismjs/components/prism-css';
 
-// Define a new language for custom highlighting
 Prism.languages['custom-highlight'] = {
   'custom-keyword': /\b(?:custom1|custom2|custom3)\b/,
-  // Add more custom words as needed
 };
 
-const CodeHighlighter = ({ code, language }) => {
+const TextEditor = ({ code, language, style }) => {
   const codeRef = useRef(null);
 
   useEffect(() => {
@@ -22,18 +17,12 @@ const CodeHighlighter = ({ code, language }) => {
     }
   }, [code]);
 
-
-
-  // --------------
   function update(text) {
     let result_element = document.querySelector("#highlighting-content");
-    // Handle final newlines (see article)
     if(text[text.length-1] == "\n") {
       text += " ";
     }
-    // Update code
     result_element.innerHTML = text.replace(new RegExp("&", "g"), "&amp;").replace(new RegExp("<", "g"), "&lt;"); /* Global RegExp */
-    // Syntax Highlight
     Prism.highlightElement(result_element);
   }
 
@@ -62,23 +51,23 @@ function checkTab(element, event) {
 }
 // ---------------
 
+  const containerStyle = {
+    position : 'relative',
+    height: '300px',
+    width: '30ch',
+    ...style
+  };
 
   return (
-    // <pre>
-    //   <code ref={codeRef} className={`language-${language}`}>
-    //     {code}
-    //   </code>
-    // </pre>
-
-    <div style={{height: '20px'}}>
+    <div style={containerStyle}>
       <textarea
-      placeholder="Enter HTML Source Code"
-      id="editing"
-      spellCheck="false"
-      onInput={(e) => update(e.target.value)}
-      onScroll={(e) => syncScroll(e.target)}
-      onKeyDown={(e) => checkTab(e.target, e)}
-    ></textarea>
+        placeholder="Enter HTML Source Code"
+        id="editing"
+        spellCheck="false"
+        onInput={(e) => update(e.target.value)}
+        onScroll={(e) => syncScroll(e.target)}
+        onKeyDown={(e) => checkTab(e.target, e)}
+      ></textarea>
 
       <pre id="highlighting" aria-hidden="true">
         <code ref={codeRef} className={`language-${language}`} id="highlighting-content">
@@ -88,4 +77,4 @@ function checkTab(element, event) {
   );
 };
 
-export default CodeHighlighter;
+export default TextEditor;

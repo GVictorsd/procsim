@@ -8,9 +8,12 @@
   /* Both elements need the same text and space styling so they are directly on top of each other */
   margin: 10px;
   padding: 10px;
-  border: 0;
-  width: calc(100% - 32px);
-  height: 150px;
+  /* border: 0; */
+  /* width: calc(100% - 32px); */
+  /* width: max-content; */
+  /* min-width: 25ch; */
+  width: 100%;
+  height: 100%;
 }
 #editing, #highlighting, #highlighting * {
   /* Also add text styles to highlighing tokens */
@@ -23,9 +26,11 @@
 
 #editing, #highlighting {
   /* In the same place */
+
   position: absolute;
-  top: 0;
-  left: 0;
+  /* position: relative; */
+  top: -10px;
+  left: -10px;
 }
 
 

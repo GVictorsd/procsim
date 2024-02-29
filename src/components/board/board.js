@@ -1,5 +1,7 @@
+import './board.css';
+import Register from "../Register/register";
 import CPU from "../cpu/cpu";
-import CodeHighlighter from "../textEditor/textEditor";
+import TextEditor from '../textEditor/textEditor';
 
 function Board() {
     const cpu = new CPU();
@@ -23,11 +25,11 @@ function Board() {
 
     return (
         <div className="Board">
-            <button onClick={execute}>Execute</button>
+            {/* <button onClick={execute}>Execute</button>
             <button onClick={clock}>clock</button>
             <button onClick={loadprogram}>Load</button>
-            {/* <TextEditor/> */}
-            <CodeHighlighter code={code} language="custom-highlight" />
+            <TextEditor code={code} style={{top: "50px"}} language="custom-highlight" /> */}
+            <Register data={9} />
         </div>
     );
 }
