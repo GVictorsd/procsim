@@ -2,6 +2,7 @@ import './board.css';
 import Register from "../Register/register";
 import CPU from "../cpu/cpu";
 import TextEditor from '../textEditor/textEditor';
+import RAM from '../RAM/RAM';
 
 function Board() {
     const cpu = new CPU();
@@ -29,7 +30,9 @@ function Board() {
             <button onClick={clock}>clock</button>
             <button onClick={loadprogram}>Load</button>
             <TextEditor code={code} style={{top: "50px"}} language="custom-highlight" /> */}
-            <Register data={9} />
+            <Register data={9} wordSize={8}/>
+            <Register data={7} wordSize={4}/>
+            <RAM name="RAM" address={10} data={253}/>
         </div>
     );
 }
