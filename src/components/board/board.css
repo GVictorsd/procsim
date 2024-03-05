@@ -1,12 +1,12 @@
 
 .Board {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* border-radius: 16px; */
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-    padding: 16px;
-    margin: 32px;
-    /* max-width: 800px; */
-    width: max-content;
+    display: grid;
+    grid-template-columns: 1.5fr 0.5fr 1.5fr;
+    /* grid-template-columns: max(200px, 1fr) max(100px, 0.25fr) max(200px, 1fr); */
+
+    /* grid-template-columns: 200px 100px 200px; */
+
+    /* grid-template-rows: repeat(6, 0.5fr); */
+    grid-template-rows: repeat(6, 1fr);
+    grid-gap: 10px 10px;
 }

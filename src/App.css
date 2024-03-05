@@ -3,11 +3,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-
 }
-
 :root {
-
     /* --dark-1: #070F2B; */
     --dark-1: #0c0817;
     /* --dark-1: #18122B; */
@@ -23,4 +20,48 @@ body {
 
     --night: rgb(18, 28, 28);
     --midnight-blue: rgb(16, 23, 32);
+
+    --font-large: 1.8em;
+    --font-medium2: 1.4em;
+    --font-medium: 1em;
+    --font-small: 0.9em;
+}
+.App {
+    zoom: 75%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 25px;
+    padding: 10px;
+}
+
+.main-pane {
+    flex: 2;
+    padding: 20px;
+    /* background-color: lightgray; */
+    box-sizing: border-box;
+}
+
+.side-pane {
+    /* flex: 0 0 250px; */
+    flex: 1;
+    padding: 20px;
+    /* background-color: lightblue; */
+    box-sizing: border-box;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+    .container {
+        margin-left: 10px;
+    }
+    .side-pane {
+        flex-basis: 100%;
+    }
 }

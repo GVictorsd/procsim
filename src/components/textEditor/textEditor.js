@@ -53,8 +53,9 @@ function checkTab(element, event) {
 
   const containerStyle = {
     position : 'relative',
-    height: '300px',
-    width: '30ch',
+    // height: '300px',
+    width: '35ch',
+    minHeight: '20ch',
     ...style
   };
 

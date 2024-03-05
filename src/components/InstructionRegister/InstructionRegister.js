@@ -1,7 +1,7 @@
 import React from 'react'
-import './register.css'
+import './InstructionRegister.css'
 
-const Register = ({name, data, wordSize, style}) => {
+const InstructionRegister = ({name, data, wordSize, style}) => {
 
     const clipedNumber = Math.max(0, Math.min(data , wordSize===4? 15: 255));
     const binaryString = clipedNumber.toString(2).padStart(wordSize===4? 4: 8, '0');
@@ -13,7 +13,7 @@ const Register = ({name, data, wordSize, style}) => {
         alignItems: 'center',
         flexDirection: 'column',
         backgroundColor: 'var(--dark-2)',
-        minHeight: '100px',
+        minHeight: '200px',
         minWidth: '200px',
         border: '2px solid var(--light-1)',
         borderRadius: '5px',
@@ -28,7 +28,6 @@ const Register = ({name, data, wordSize, style}) => {
                         <div key={index} className={`bits ${bit === '1' ? 'set' : 'reset'}`}></div>
                         {index===3 && wordSize!==4 && <div style={{width: '5px'}}/>}
                     </>
-
                 ))}
             </div>
             <div style={{fontSize: 'var(--font-large)', height: 'fit-content'}}>
@@ -43,36 +42,4 @@ const Register = ({name, data, wordSize, style}) => {
         </div>
     );
 }
-export default Register;
-
-// class EightBitRegister extends React.Component {
-//   render() {
-//     const number = this.props || 0;
-
-//     // Ensure the number is within 8-bit range
-//     const eightBitNumber = Math.max(0, Math.min(number, 255));
-
-//     // Convert the number to its 8-bit binary representation
-//     const binaryString = eightBitNumber.toString(2).padStart(8, '0');
-
-//     // Split the binary string into an array of individual bits
-//     const bits = binaryString.split('');
-
-//     return (
-//         `
-//         <div className="eight-bit-register">
-//             <span>${bits[0]}</span>
-//             <span>${bits[1]}</span>
-//             <span>${bits[2]}</span>
-//             <span>${bits[3]}</span>
-//             <span>${bits[4]}</span>
-//             <span>${bits[5]}</span>
-//             <span>${bits[6]}</span>
-//             <span>${bits[7]}</span>
-//         </div>
-//         `
-//     );
-//   }
-// }
-
-// export default EightBitRegister;
+export default InstructionRegister;

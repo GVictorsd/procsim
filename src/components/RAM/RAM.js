@@ -20,25 +20,27 @@ const RAM = ({name, address, data, style}) => {
         alignItems: 'center',
         flexDirection: 'column',
         backgroundColor: 'var(--dark-2)',
-        minHeight: '150px',
-        minWidth: '300px',
+        minHeight: '200px',
+        minWidth: '200px',
         border: '2px solid var(--light-1)',
         borderRadius: '5px',
         ...style
     }
     return (
         <div className="reg-container" style={regContainerStyle}>
-            <div><h3>{name || 'Register'}</h3></div>
+            <h1 style={{fontSize: 'var(--font-medium)'}}>{name || 'Register'}</h1>
 
-            <div><h4>{'Address:'}</h4></div>
-            <div style={{fontSize: '3ch', height: 'fit-content'}}>
+            <div style={{fontSize: 'var(--font-small)', height: 'fit-content'}}>{'Address'}</div>
+            <div style={{fontSize: 'var(--font-medium2)', height: 'fit-content'}}>
                 {`${address}`}
             </div>
-            <div>
+            <div style={{fontSize: 'var(--font-small)'}}>
                 {`0x${address.toString(16)}`}
             </div>
 
-            <div><h4>{'Data:'}</h4></div>
+            <hr style={{width: '75%', opacity: '0.5'}} />
+
+            <div style={{fontSize: 'var(--font-small)'}}>{'Data'}</div>
             <div className='bits-container'>
                 {databits.map((bit, index) => (
                     <>
@@ -47,12 +49,13 @@ const RAM = ({name, address, data, style}) => {
                     </>
                 ))}
             </div>
-            <div style={{fontSize: '5ch', height: 'fit-content'}}>
+            <div style={{fontSize: 'var(--font-large)', height: 'fit-content'}}>
                 {`${data}`}
             </div>
-            <div>
+            <div style={{fontSize: 'var(--font-medium)'}}>
                 {`0x${data.toString(16)}`}
             </div>
+            <br/>
         </div>
     );
 }
