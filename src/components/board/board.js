@@ -5,6 +5,7 @@ import CPU from "../cpu/cpu";
 import InstructionRegister from '../InstructionRegister/InstructionRegister';
 import RAM from '../RAM/RAM';
 import Clock from '../Clock/Clock';
+import Alu from '../../Alu/Alu';
 
 function Board() {
     const cpu = new CPU();
@@ -36,10 +37,11 @@ function Board() {
             {/* <Register data={9} wordSize={8}/> */}
             <Register name={'Program Counter'} data={7} wordSize={4} style={{gridColumn: '1 / span 1', gridRow: '1 / span 1'}}/>
             <RAM name="RAM" address={10} data={253} style={{gridColumn: '1 / span 1', gridRow: '2 / span 2'}} />
-            <InstructionRegister name={'Instruction Register'} data={7} wordSize={4} style={{gridColumn: '1 / span 1', gridRow: '4 / span 2'}}/>
+            <InstructionRegister name={'Instruction Register'} instruction={0x16} flags={{zero:0, carry: 1}} style={{gridColumn: '1 / span 1', gridRow: '4 / span 2'}}/>
             <Clock name={'Clock'} style={{gridColumn: '1 / span 1', gridRow: '6 / span 1'}} />
 
             <Register name={'A-Register'} data={9} wordSize={8} style={{gridColumn: '3 / span 1', gridRow: '1 / span 1'}}/>
+            <Alu name={'ALU'} adata={5} bdata={2} result={7} style={{gridColumn: '3 / span 1', gridRow: '2 / span 2'}} />
 
             <Register name={'B-Register'} data={9} wordSize={8} style={{gridColumn: '3 / span 1', gridRow: '4 / span 1'}}/>
             <Register name={'Output Register'} data={9} wordSize={8} style={{gridColumn: '3 / span 1', gridRow: '5 / span 2'}}/>

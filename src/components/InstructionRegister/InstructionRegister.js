@@ -1,11 +1,22 @@
 import React from 'react'
 import './InstructionRegister.css'
 
-const InstructionRegister = ({name, data, wordSize, style}) => {
+const InstructionRegister = ({name, instruction, style, flags}) => {
+    // flags: {zero: 0, carry: 0}
 
-    const clipedNumber = Math.max(0, Math.min(data , wordSize===4? 15: 255));
-    const binaryString = clipedNumber.toString(2).padStart(wordSize===4? 4: 8, '0');
-    const bits = binaryString.split('');
+    const clipedinst = Math.max(0, Math.min(instruction, 255));
+    const binaryString = clipedinst.toString(2).padStart(8, '0');
+    const instBits = binaryString.split('');
+
+    const instructions = [
+        'nop',
+        'lda',
+        'add',
+        'sub',
+        'sta',
+    ]
+    const opcode = clipedinst >> 4; 
+    const data = clipedinst & 0x0f;
 
     const regContainerStyle = {
         display: 'flex',
@@ -21,24 +32,37 @@ const InstructionRegister = ({name, data, wordSize, style}) => {
     }
     return (
         <div className="reg-container" style={regContainerStyle}>
-            <h1 style={{fontSize: 'var(--font-medium)'}}>{name ||'Register'}</h1>
+            <h1 style={{fontSize: 'var(--font-medium)'}}>{name || 'Instruction Register'}</h1>
+
+            <div style={{fontSize: 'var(--font-small)'}}>{'Instruction'}</div>
+            <br/>
             <div className='bits-container'>
-                {bits.map((bit, index) => (
+                {instBits.map((bit, index) => (
                     <>
                         <div key={index} className={`bits ${bit === '1' ? 'set' : 'reset'}`}></div>
-                        {index===3 && wordSize!==4 && <div style={{width: '5px'}}/>}
+                        {index===3 && <div style={{width: '5px'}}/>}
                     </>
                 ))}
             </div>
             <div style={{fontSize: 'var(--font-large)', height: 'fit-content'}}>
-                {data}
+                {`${instructions[opcode]} ${data}`}
             </div>
-            <div style={{fontSize: 'var(--font-small)'}}>
-                {`0x${data.toString(16)}`}
-                {/* {bits.map((bit, index) => (
-                    <span key={index}>{bit}</span>
-                ))} */}
+            <br/>
+            <hr style={{width: '75%', opacity: '0.5'}} />
+
+
+            <div style={{fontSize: 'var(--font-small)'}}>{'flags'}</div>
+            <div className='bits-container'>
+                <div style={{display: 'flex', flexDirection:'column', justifyContent: 'center'}}>
+                    <div className={`bits ${flags?.zero ? 'set' : 'reset'}`}></div>
+                    zero
+                </div>
+                <div style={{display: 'flex', flexDirection:'column', justifyContent: 'center'}}>
+                    <div className={`bits ${flags?.carry ? 'set' : 'reset'}`}></div>
+                    carry
+                </div>
             </div>
+            <br/>
         </div>
     );
 }
