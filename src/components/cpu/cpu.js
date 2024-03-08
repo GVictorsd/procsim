@@ -7,6 +7,7 @@ class CPU {
         this.state = {
             PC: 0,
             AReg: 0,
+            BReg: 0,
             MemAddReg: 0,
             Ram: new Array(16).fill(0),
             InstReg: 0,

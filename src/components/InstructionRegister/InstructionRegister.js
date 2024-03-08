@@ -1,14 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './InstructionRegister.css'
 
 const InstructionRegister = ({name, instruction, style, flags}) => {
     // flags: {zero: 0, carry: 0}
+    const [instructionData, setInstructionData] = useState(instruction);
+    const [flagsData, setFlagsData] = useState(flags);
 
     const clipedinst = Math.max(0, Math.min(instruction, 255));
     const binaryString = clipedinst.toString(2).padStart(8, '0');
     const instBits = binaryString.split('');
 
-    const instructions = [
+    const instMap = [
         'nop',
         'lda',
         'add',
@@ -17,6 +19,11 @@ const InstructionRegister = ({name, instruction, style, flags}) => {
     ]
     const opcode = clipedinst >> 4; 
     const data = clipedinst & 0x0f;
+
+    useState(() => {
+        setInstructionData(instruction);
+        setFlagsData(flags);
+    }, [instruction, flags?.zero, flags?.carry])
 
     const regContainerStyle = {
         display: 'flex',
@@ -45,7 +52,7 @@ const InstructionRegister = ({name, instruction, style, flags}) => {
                 ))}
             </div>
             <div style={{fontSize: 'var(--font-large)', height: 'fit-content'}}>
-                {`${instructions[opcode]} ${data}`}
+                {`${instMap[opcode]} ${data}`}
             </div>
             <br/>
             <hr style={{width: '75%', opacity: '0.5'}} />
@@ -54,11 +61,11 @@ const InstructionRegister = ({name, instruction, style, flags}) => {
             <div style={{fontSize: 'var(--font-small)'}}>{'flags'}</div>
             <div className='bits-container'>
                 <div style={{display: 'flex', flexDirection:'column', justifyContent: 'center'}}>
-                    <div className={`bits ${flags?.zero ? 'set' : 'reset'}`}></div>
+                    <div className={`bits ${flagsData?.zero ? 'set' : 'reset'}`}></div>
                     zero
                 </div>
                 <div style={{display: 'flex', flexDirection:'column', justifyContent: 'center'}}>
-                    <div className={`bits ${flags?.carry ? 'set' : 'reset'}`}></div>
+                    <div className={`bits ${flagsData?.carry ? 'set' : 'reset'}`}></div>
                     carry
                 </div>
             </div>

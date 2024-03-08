@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './RAM.css'
 
 const RAM = ({name, address, data, style}) => {
@@ -6,6 +6,8 @@ const RAM = ({name, address, data, style}) => {
     // const clipAddress = Math.max(0, Math.min(data , 15));
     // const binAddress = clipAddress.toString(2).padStart(4);
     // const Addressbits = binAddress.split('');
+    const [DATA, setData] = useState(data);
+    const [ADDRESS, setAddress] = useState(address);
     const getBits = (data, wordSize) => {
         const clipedNumber = Math.max(0, Math.min(data , wordSize===4? 15: 255));
         const binaryString = clipedNumber.toString(2).padStart(wordSize===4? 4: 8, '0');
@@ -13,6 +15,11 @@ const RAM = ({name, address, data, style}) => {
     }
 
     const databits = getBits(data, 8);
+
+    useEffect(() => {
+        setData(data);
+        setAddress(address);
+    }, [data, address])
 
     const regContainerStyle = {
         display: 'flex',
@@ -32,10 +39,10 @@ const RAM = ({name, address, data, style}) => {
 
             <div style={{fontSize: 'var(--font-small)', height: 'fit-content'}}>{'Address'}</div>
             <div style={{fontSize: 'var(--font-medium2)', height: 'fit-content'}}>
-                {`${address}`}
+                {`${ADDRESS}`}
             </div>
             <div style={{fontSize: 'var(--font-small)'}}>
-                {`0x${address.toString(16)}`}
+                {`0x${ADDRESS.toString(16)}`}
             </div>
 
             <hr style={{width: '75%', opacity: '0.5'}} />
@@ -50,10 +57,10 @@ const RAM = ({name, address, data, style}) => {
                 ))}
             </div>
             <div style={{fontSize: 'var(--font-large)', height: 'fit-content'}}>
-                {`${data}`}
+                {`${DATA}`}
             </div>
             <div style={{fontSize: 'var(--font-medium)'}}>
-                {`0x${data.toString(16)}`}
+                {`0x${DATA.toString(16)}`}
             </div>
             <br/>
         </div>

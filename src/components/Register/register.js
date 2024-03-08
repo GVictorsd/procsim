@@ -1,11 +1,16 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './register.css'
 
 const Register = ({name, data, wordSize, style}) => {
 
-    const clipedNumber = Math.max(0, Math.min(data , wordSize===4? 15: 255));
-    const binaryString = clipedNumber.toString(2).padStart(wordSize===4? 4: 8, '0');
-    const bits = binaryString.split('');
+    const [DATA, setData] = useState(data);
+    // const clipedNumber = Math.max(0, Math.min(data , wordSize===4? 15: 255));
+    var binaryString = DATA.toString(2).padStart(wordSize, '0');
+    var bits = binaryString.split('');
+
+    useEffect(() => {
+        setData(data);
+    }, [data])
 
     const regContainerStyle = {
         display: 'flex',
@@ -32,10 +37,10 @@ const Register = ({name, data, wordSize, style}) => {
                 ))}
             </div>
             <div style={{fontSize: 'var(--font-large)', height: 'fit-content'}}>
-                {data}
+                {DATA}
             </div>
             <div style={{fontSize: 'var(--font-small)'}}>
-                {`0x${data.toString(16)}`}
+                {`0x${DATA.toString(16)}`}
                 {/* {bits.map((bit, index) => (
                     <span key={index}>{bit}</span>
                 ))} */}
