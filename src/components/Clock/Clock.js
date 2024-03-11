@@ -1,7 +1,7 @@
 import React from 'react'
 import './Clock.css'
 
-const Clock = ({name, style}) => {
+const Clock = ({name, reset, clock, style}) => {
 
     const regContainerStyle = {
         display: 'flex',
@@ -18,6 +18,12 @@ const Clock = ({name, style}) => {
     return (
         <div className="reg-container" style={regContainerStyle}>
             <h1 style={{fontSize: 'var(--font-medium)'}}>{name ||'Clock'}</h1>
+            {/* <div>
+                <div>Reset</div>
+                <div>Clock</div>
+            </div> */}
+            <button onClick={reset}>Reset</button>
+            <button onClick={clock}>Clock</button>
         </div>
     );
 }

@@ -45,10 +45,10 @@ const InstructionRegister = ({name, instruction, style, flags}) => {
             <br/>
             <div className='bits-container'>
                 {instBits.map((bit, index) => (
-                    <>
-                        <div key={index} className={`bits ${bit === '1' ? 'set' : 'reset'}`}></div>
+                    <div key={index}>
+                        <div className={`bits ${bit === '1' ? 'set' : 'reset'}`}></div>
                         {index===3 && <div style={{width: '5px'}}/>}
-                    </>
+                    </div>
                 ))}
             </div>
             <div style={{fontSize: 'var(--font-large)', height: 'fit-content'}}>

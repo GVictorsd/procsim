@@ -9,7 +9,9 @@ import Alu from '../../Alu/Alu';
 import { useEffect, useState } from 'react';
 
 function Board() {
-    const cpu = new CPU();
+    // const cpu = new CPU();
+    const [cpu, setCPU] = useState(new CPU());
+    const [cpuState, setCPUState] = useState(cpu.state);
 
     // const [PC, setPC] = useState(0);
     // const [AReg, setAReg] = useState(0);
@@ -33,7 +35,7 @@ function Board() {
     //     setBus(cpu.state.Bus);
     //     setZero(cpu.state.zero);
     //     setCarry(cpu.state.carry);
-    // }, [cpu.state]);
+    // }, [cpu.state.PC]);
 
 //     useEffect(() => {
 //     const updateStateFromCpu = () => {
@@ -77,14 +79,16 @@ function Board() {
     //     setCarry(cpu.state.carry);
     // }, [cpu.state.PC, cpu.state.AReg,cpu.state.BReg, cpu.state.MemAddReg, cpu.state.Ram, cpu.state.InstReg, cpu.state.OutReg, cpu.state.Bus, cpu.state.zero, cpu.state.carry]);
 
-    function init() {
+    function reset() {
         cpu.reset();
-    }
-    function execute() {
-        cpu.clock();
+        loadprogram();
+        setCPUState(cpu.state);
+        console.log(cpu.state);
     }
     function clock() {
         cpu.clock();
+        setCPUState(cpu.state);
+        console.log(cpu.state);
     }
     function loadprogram() {
         var ram = new Array(16).fill(0);
@@ -107,7 +111,7 @@ function Board() {
             <Register name={'Program Counter'} data={PC} wordSize={4} style={{gridColumn: '1 / span 1', gridRow: '1 / span 1'}}/>
             <RAM name="RAM" address={MemAddReg} data={MemAddReg} style={{gridColumn: '1 / span 1', gridRow: '2 / span 2'}} />
             <InstructionRegister name={'Instruction Register'} instruction={InstReg} flags={{zero:zero, carry:carry}} style={{gridColumn: '1 / span 1', gridRow: '4 / span 2'}}/>
-            <Clock name={'Clock'} style={{gridColumn: '1 / span 1', gridRow: '6 / span 1'}} />
+            <Clock name={'Clock'} reset={reset} clock={clock} style={{gridColumn: '1 / span 1', gridRow: '6 / span 1'}} />
 
             <Register name={'A-Register'} data={AReg} wordSize={8} style={{gridColumn: '3 / span 1', gridRow: '1 / span 1'}}/>
             <Alu name={'ALU'} adata={AReg} bdata={BReg} result={0} style={{gridColumn: '3 / span 1', gridRow: '2 / span 2'}} />

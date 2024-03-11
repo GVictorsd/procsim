@@ -50,10 +50,10 @@ const RAM = ({name, address, data, style}) => {
             <div style={{fontSize: 'var(--font-small)'}}>{'Data'}</div>
             <div className='bits-container'>
                 {databits.map((bit, index) => (
-                    <>
-                        <div key={index} className={`bits ${bit === '1' ? 'set' : 'reset'}`}></div>
+                    <div key={index}>
+                        <div className={`bits ${bit === '1' ? 'set' : 'reset'}`}></div>
                         {index===3 && <div style={{width: '5px'}}/>}
-                    </>
+                    </div>
                 ))}
             </div>
             <div style={{fontSize: 'var(--font-large)', height: 'fit-content'}}>

@@ -29,10 +29,10 @@ const Register = ({name, data, wordSize, style}) => {
             <h1 style={{fontSize: 'var(--font-medium)'}}>{name ||'Register'}</h1>
             <div className='bits-container'>
                 {bits.map((bit, index) => (
-                    <>
-                        <div key={index} className={`bits ${bit === '1' ? 'set' : 'reset'}`}></div>
+                    <div key={index}>
+                        <div className={`bits ${bit === '1' ? 'set' : 'reset'}`}></div>
                         {index===3 && wordSize!==4 && <div style={{width: '5px'}}/>}
-                    </>
+                    </div>
 
                 ))}
             </div>
@@ -41,9 +41,6 @@ const Register = ({name, data, wordSize, style}) => {
             </div>
             <div style={{fontSize: 'var(--font-small)'}}>
                 {`0x${DATA.toString(16)}`}
-                {/* {bits.map((bit, index) => (
-                    <span key={index}>{bit}</span>
-                ))} */}
             </div>
         </div>
     );
