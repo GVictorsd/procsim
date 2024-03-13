@@ -1,3 +1,16 @@
+.tab-options-cnt {
+    width: 100%;
+    display: flex;
+}
+.tab-option {
+    font-size: 2ch;
+    text-align: center;
+    flex: 1;
+    padding: 10px;
+    border: 2px solid var(--light-3);
+    background-color: var(--dark-2);
+    color: var(--light-4);
+}
 
 .tabs-container {
     display: flex;
@@ -32,8 +45,14 @@
 
 .text-editor-cnt {
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     height: 100%;
     width: 100%;
     align-items: center;
+}
+
+.assembled-output {
+    height: 100%;
+    padding: 20px;
+    font-size: 2ch;
 }

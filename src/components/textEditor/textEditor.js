@@ -8,7 +8,7 @@ Prism.languages['custom-highlight'] = {
   'custom-keyword': /\b(?:custom1|custom2|custom3)\b/,
 };
 
-const TextEditor = ({ code, language, style }) => {
+const TextEditor = ({ code, language, style, onTextChange }) => {
   const codeRef = useRef(null);
 
   useEffect(() => {
@@ -24,6 +24,7 @@ const TextEditor = ({ code, language, style }) => {
     }
     result_element.innerHTML = text.replace(new RegExp("&", "g"), "&amp;").replace(new RegExp("<", "g"), "&lt;"); /* Global RegExp */
     Prism.highlightElement(result_element);
+    onTextChange && onTextChange(text);
   }
 
 function syncScroll(element) {
@@ -62,7 +63,7 @@ function checkTab(element, event) {
   return (
     <div style={containerStyle}>
       <textarea
-        placeholder="Enter HTML Source Code"
+        placeholder="Enter Instructions"
         id="editing"
         spellCheck="false"
         onInput={(e) => update(e.target.value)}
